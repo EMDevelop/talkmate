@@ -1,0 +1,22 @@
+{
+  "name": "talkmate",
+  "version": "1.0.0",
+  "description": "## Contents",
+  "main": "index.js",
+  "scripts": {
+    "mobile": "cd ./mobile && flutter run",
+    "web": "echo NOT_IMPLEMENTED",
+    "backend": "cd ./backend && NODE_ENV=development npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EMDevelop/talkmate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EMDevelop/talkmate/issues"
+  },
+  "homepage": "https://github.com/EMDevelop/talkmate#readme"
+}

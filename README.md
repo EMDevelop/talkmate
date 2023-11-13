@@ -3,6 +3,7 @@
 ## Contents
 
 - [Overview](#overview)
+- [Installation](#installation)
 - [Tech](#tech)
   - [Stack](#stack)
   - [Other](#other)
@@ -13,6 +14,14 @@
 ## Overview
 
 A Language learning App backed by AI. you select the language you want to learn, and head straight into a conversation with a virtual avatar. The avatar will listen to what you say, correct you if wrong, and respond.
+
+## Installation
+
+- Clone: `git clone https://github.com/EMDevelop/talkmate`
+- Installs:
+  - Flutter (Mobile) Mac Silicone: https://docs.flutter.dev/get-started/install/macos
+  - NestJs (Backend):
+  - NextJs (Web UI):
 
 ## Tech
 
