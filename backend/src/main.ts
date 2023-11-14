@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
+import helmet from 'helmet'
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
@@ -8,8 +9,5 @@ async function bootstrap() {
 }
 bootstrap()
 
-function helmet(): any {
-	throw new Error('Function not implemented.')
-}
 // TODO: add some security to only allow being accessed by our app?
 // app.enableCors({ origin, credentials: true })
