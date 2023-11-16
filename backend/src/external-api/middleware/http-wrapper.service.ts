@@ -16,7 +16,11 @@ export class HTTPWrapperService {
 		return this.http.get<T>(url, config)
 	}
 
-	async post<ResponseObject>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<AxiosResponse<ResponseObject, unknown>> {
+	async post<ResponseObject>(
+		url: string,
+		data?: unknown,
+		config?: AxiosRequestConfig
+	): Promise<AxiosResponse<ResponseObject, unknown>> {
 		return await this.http.post<ResponseObject>(url, data, config)
 	}
 }

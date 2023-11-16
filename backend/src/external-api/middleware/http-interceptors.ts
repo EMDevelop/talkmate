@@ -11,7 +11,11 @@ export function logRequest() {
 				JSON.stringify(request.data)
 			)
 		} else {
-			console.debug('[API Interceptor] REQUEST - Sending %s request to %s', request.method, request.url)
+			console.debug(
+				'[API Interceptor] REQUEST - Sending %s request to %s',
+				request.method,
+				request.url
+			)
 		}
 		return request
 	}
@@ -19,14 +23,23 @@ export function logRequest() {
 
 export function logResponse() {
 	return (response: AxiosResponse<unknown>): AxiosResponse<unknown> => {
-		console.debug('[API Interceptor]:  RESPONSE - Status: (%s), Data: %s', response.status, response.data)
+		console.debug(
+			'[API Interceptor]:  RESPONSE - Status: (%s), Data: %s',
+			response.status,
+			response.data
+		)
 		return response
 	}
 }
 
 export function logError() {
 	return (error: AxiosError<unknown>): Promise<AxiosError> => {
-		console.error('[API Interceptor]: ERROR - code: (%s), message: (%s), response: %s', error.code, error.message, error.response?.data)
+		console.error(
+			'[API Interceptor]: ERROR - code: (%s), message: (%s), response: %s',
+			error.code,
+			error.message,
+			error.response?.data
+		)
 		return Promise.reject(error)
 	}
 }
