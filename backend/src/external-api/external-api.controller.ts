@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common'
 import { Response } from 'express'
 import { ExternalAPIService } from './external-api.service'
@@ -14,33 +13,39 @@ export class ExternalController {
 		response.status(HttpStatus.OK).send('body')
 	}
 
-	@Post('test')
-	async processPostTest(@Res() response: Response, @Body() body: any): Promise<void> {
+	@Get('stream-test')
+	async processStreamingFile(@Res() response: Response, @Body() body: any): Promise<void> {
 		console.log(body)
-		await this.apiService.testPost(body)
-		response.status(HttpStatus.OK).send('body')
+		const stream = this.apiService.testStream()
+		response.contentType('audio/mpeg')
+		stream.pipe(response)
 	}
 
-	@Post('gpt-test')
+	@Post('gpt-prompt')
 	async processPromptChatGpt(@Res() response: Response, @Body() body: any): Promise<void> {
 		console.log(body)
 		const result = await this.apiService.gptPost(body)
 		response.status(HttpStatus.OK).send(result)
 	}
 
-	@Post('tts-test')
+	@Post('tts-prompt')
 	async processTts(@Res() response: Response, @Body() body: any): Promise<void> {
 		console.log(body)
-		await this.apiService.ttsPost(body)
-		response.status(HttpStatus.OK).send('done')
+		const audioResponseStream = await this.apiService.ttsPost(body)
+
+		response.contentType('audio/mpeg')
+		response.status(HttpStatus.OK)
+		audioResponseStream.pipe(response)
 	}
 
 	@Post('combo-test')
 	async processConversation(@Res() response: Response, @Body() body: any): Promise<void> {
 		console.log(body)
 		const gptResponse = await this.apiService.gptPost(body)
-		const audioResponseBuffer = await this.apiService.ttsPost({ text: gptResponse })
+		const audioResponseStream = await this.apiService.ttsPost({ text: gptResponse })
+
 		response.contentType('audio/mpeg')
-		response.status(HttpStatus.OK).send(audioResponseBuffer)
+		response.status(HttpStatus.OK)
+		audioResponseStream.pipe(response)
 	}
 }

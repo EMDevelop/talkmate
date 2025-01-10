@@ -1,4 +1,6 @@
+import 'dotenv/config'
 import { Injectable } from '@nestjs/common'
+import { ReadStream } from 'fs'
 import { OpenAI } from 'openai'
 
 @Injectable()
@@ -9,10 +11,16 @@ export class OpenAiApi {
 		this.client = new OpenAI()
 	}
 
-	async promptChatGpt(prompt: string) {
+	async promptChatGpt(systemPrompt: string, userPrompt: string) {
 		const stream = await this.client.chat.completions.create({
 			model: 'gpt-3.5-turbo-1106',
-			messages: [{ role: 'user', content: prompt ?? 'Say this is a test' }],
+			messages: [
+				{
+					role: 'system',
+					content: systemPrompt
+				},
+				{ role: 'user', content: userPrompt }
+			],
 			stream: true
 		})
 
@@ -24,12 +32,15 @@ export class OpenAiApi {
 	}
 
 	async ttsService(text: string) {
-		const mp3 = await this.client.audio.speech.create({
+		const response = await this.client.audio.speech.create({
 			model: 'tts-1',
 			voice: 'alloy',
 			input: text
 		})
 
-		return Buffer.from(await mp3.arrayBuffer())
+		// response.body typing seems to be incorrect hence the unknown type cast
+		// I also don't think the data is actually streamed back from OpenAI - seems to be an open issue
+		// related thread: https://community.openai.com/t/streaming-from-text-to-speech-api/493784
+		return response.body as unknown as ReadStream
 	}
 }

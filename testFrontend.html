@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Post Text to Local Endpoint</title>
+</head>
+<body>
+
+<form id="myForm">
+    <label for="discussionPrompt">Enter discussion topic:</label><br>
+    <input type="text" id="discussionPrompt" name="discussionPrompt"><br><br>
+
+    <label for="prompt">Enter prompt:</label><br>
+    <input type="text" id="prompt" name="prompt"><br><br>
+    <button type="button" onclick="postData()">Submit</button>
+</form>
+
+<script>
+function postData() {
+    const discussionPrompt = document.getElementById('discussionPrompt').value;
+    const prompt = document.getElementById('prompt').value;
+
+    fetch('http://localhost:3000/combo-test', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ discussionPrompt, prompt }),
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Data sent successfully!');
+            document.getElementById('myForm').reset();
+        } else {
+            alert('Failed to send data.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while sending data.');
+    });
+}
+</script>
+
+</body>
+</html>

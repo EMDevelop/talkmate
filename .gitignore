@@ -4,4 +4,4 @@ node_modules
 dist
 */.env
 .env
-*/responseSpeech.mp3
+*/speechFiles
